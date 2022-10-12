@@ -86,8 +86,6 @@ Scenario('Add Reports ', async ({ I, userlogin, PIM }) => {
  //div/span[text()='" + dropdownvalue + "']
 let accounts = new DataTable(['username', 'password']);
 accounts.add(['Admin', 'admin123']);
-accounts.add(['Admin', 'admin123']);
-accounts.add(['Admin', 'admin123']);
 
 Data(accounts).Scenario('Test Login',async ({I,current}) =>
 {
