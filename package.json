@@ -1,0 +1,23 @@
+{
+  "name": "codeceptframework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "codeceptjs": "^3.3.5",
+    "playwright": "^1.26.1"
+  },
+  "dependencies": {
+    "chai": "^4.3.6",
+    "chance": "^1.1.8",
+    "dotenv": "^16.0.2",
+    "fs": "^0.0.1-security",
+    "playwright-core": "1.18"
+  }
+}
