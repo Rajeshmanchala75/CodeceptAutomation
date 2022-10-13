@@ -59,7 +59,7 @@ Scenario('searching for user', async ({ I, userlogin, PIM }) => {
 Scenario('Add Reports ', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
     await userlogin.login(process.env.login_username, process.env.password)
-    await PIM.addReports('Rajesh'+rnd);
+    await PIM.addReports('Rajesh' + rnd);
     await PIM.handlingDropDown('Selection Criteria', 'Pay Grade');
     I.wait(10);
     await PIM.handlingDropDown('Include', 'Current Employees Only');
@@ -72,58 +72,38 @@ Scenario('Add Reports ', async ({ I, userlogin, PIM }) => {
     I.click("//h6[text()='Display Fields']/..//i[@class='oxd-icon bi-plus']");
     await PIM.handlingDropDown('Select Display Field', 'Employee First Name');
     await I.click("//button[text()=' Save ']")
-    let sucesssave=await I.grabTextFrom("//p[text()='Successfully Saved']");
+    let sucesssave = await I.grabTextFrom("//p[text()='Successfully Saved']");
     sucesssave.should.be.eql('Successfully Saved');
 }).tag('a1');
- 
-// Scenario('reports searching',async ({I, userlogin, PIM }) =>{
-//     I.amOnPage(process.env.url);
-//     await userlogin.login(process.env.login_username, process.env.password)
-//     I.click("//a[text()='Reports']");
-//     PIM.searchUser('Report Name','Rajesh1941');
-// }).tag('a3');
-
- //div/span[text()='" + dropdownvalue + "']
 let accounts = new DataTable(['username', 'password']);
 accounts.add(['Admin', 'admin123']);
 
-Data(accounts).Scenario('Test Login',async ({I,current}) =>
-{
-{
-    I.amOnPage(process.env.url);
-    I.waitForElement("//input[@name='username']",15)
-    I.fillField("//input[@name='username']",current.username);
-    I.fillField("//input[@name='password']",current.password);
-    await I.click("//button[@type='submit']")
-    //await userlogin.login(process.env.username,process.env.password)
-}
+Data(accounts).Scenario('Test Login', async ({ I, current }) => {
+    {
+        I.amOnPage(process.env.url);
+        I.waitForElement("//input[@name='username']", 15)
+        I.fillField("//input[@name='username']", current.username);
+        I.fillField("//input[@name='password']", current.password);
+        await I.click("//button[@type='submit']")
+        
+    }
 }).tag('R')
 
-Scenario('Links verification', async ({ I, userlogin,PIM }) => {
+Scenario('Importing Data', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
-    await userlogin.login(process.env.login_username, process.env.password)
-    await userlogin.leftnavigationLinksVerfications("PIM")
-    await userlogin.leftnavigationLinksVerfications("Leave")
-    PIM.dateSelection('From Date',"2022-09-10");
-   // PIM.dateSelection('From Date',"2022-12-10");
-   // PIM.DeteSelection('To Date','2022','July','25');
-}).tag("h2");
-
-Scenario('Importing Data', async ({ I, userlogin,PIM }) => {
-    I.amOnPage(process.env.url);
-    const datef=new Date();
-    console.log(datef.getMonth(10));
-    console.log(datef.getTime());
-    const d = new Date('2019-02-10')
-    console.log(d.toLocaleString({month:'long'}));
-    //const newDate = new Date(d)
-
-//console.log(newDate.setMonth(5));
-
-//console.log(new Date('2020-01-28').toLocaleString('en-us',{month:'long'}));
-console.log(d.toLocaleString('en-us',{month:'short'}));
-//     await userlogin.login(process.env.login_username, process.env.password);
-//    let sucesstext= await PIM.configurationtab('Data Import','importData1.csv');
-//    sucesstext.should.be.eql('Number of Records Imported: 1');
+    await userlogin.login(process.env.login_username, process.env.password);
+    await userlogin.leftnavigationLinksVerfications("Leave");
+    PIM.dateSelection('From Date','2022-10-01')
+    //let sucesstext = await PIM.configurationtab('Data Import', 'importData1.csv');
+   // sucesstext.should.be.eql('Number of Records Imported: 1');
 
 }).tag("h1");
+
+Scenario('Importing Data1', async ({ I, userlogin, PIM }) => {
+    I.amOnPage(process.env.url);
+    await userlogin.login(process.env.login_username, process.env.password);
+   // let sucesstext = await PIM.configurationtab('Data Import', 'importData1.csv');
+    //sucesstext.should.be.eql('Number of Records Imported: 1');
+    await userlogin.leftnavigationLinksVerfications("Leave")
+    PIM.dateSelection('From Date','2022-10-01')
+}).tag("h5");
