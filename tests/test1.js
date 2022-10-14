@@ -2,6 +2,7 @@ const { RND } = require("../pages/functions");
 const should = require("chai").should();
 const chance = require("chance").Chance();
 let rnd = chance.string({ length: 4, numeric: true })
+let rndname = chance.name()
 
 Feature("Orange HRM")
 
@@ -32,29 +33,34 @@ Scenario('Links verification', async ({ I, userlogin }) => {
 }).tag("viyaan1");
 
 Scenario('Creating User', async ({ I, userlogin, PIM }) => {
-    let firstname = 'Testing' + rnd
-    let lastname = 'test' + rnd
+    let firstname = 'FN' + rndname
+    let lastname = 'LN' + rndname
     I.amOnPage(process.env.url);
     // await userlogin.login('Admin','admin123')
     await userlogin.login(process.env.login_username, process.env.password)
-    let successM = await PIM.UserCreation(firstname, lastname, rnd, 'Password!1', 'five.jpg');
-    successM.should.be.eql("Successfully Saved")
-    await PIM.DeteSelection('License Expiry Date', '2022-06-25');
-    await PIM.DeteSelection('Date of Birth', '1996-06-14');
+    await PIM.UserCreation(firstname, lastname, rnd, 'Password!1', 'five.jpg');
+    let successmessage = await PIM.savebutton('Successfully Saved');
+    successmessage.should.be.eql("Successfully Saved");
+    await PIM.dateSelection('License Expiry Date', '2022-06-25');
+    await PIM.dateSelection('Date of Birth', '1996-06-14');
     await PIM.handlingDropDown('Nationality', 'Indian');
     await PIM.handlingDropDown('Marital Status', 'Married');
     await PIM.handlingDropDown('Blood Type', 'B+');
     await I.click("//p[text()=' * Required']/..//button")
     let succesmessage = await I.grabTextFrom("//p[text()='Successfully Updated']")
     succesmessage.should.be.eql("Successfully Updated")
-}).tag('chay')
+    await PIM.searchUser('Employee Name', firstname, 'PIM');
+    await PIM.gridDatatable(rnd);
+    await PIM.gridDatatable(firstname + " ");
+    await PIM.gridDatatable(lastname);
+}).tag('c1')
 
 Scenario('searching for user', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
     await userlogin.login(process.env.login_username, process.env.password)
-    await PIM.searchUser('Employee Id', rnd)
-    await PIM.gridDatatable(rnd);
-}).tag('raji')
+    await PIM.searchUser('Employee Id','9752','PIM')
+    await PIM.gridDatatable('9752');
+}).tag('chay')
 
 Scenario('Add Reports ', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
@@ -75,6 +81,7 @@ Scenario('Add Reports ', async ({ I, userlogin, PIM }) => {
     let sucesssave = await I.grabTextFrom("//p[text()='Successfully Saved']");
     sucesssave.should.be.eql('Successfully Saved');
 }).tag('a1');
+
 let accounts = new DataTable(['username', 'password']);
 accounts.add(['Admin', 'admin123']);
 
@@ -85,25 +92,68 @@ Data(accounts).Scenario('Test Login', async ({ I, current }) => {
         I.fillField("//input[@name='username']", current.username);
         I.fillField("//input[@name='password']", current.password);
         await I.click("//button[@type='submit']")
-        
+
     }
-}).tag('R')
+}).tag('R');
 
 Scenario('Importing Data', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
     await userlogin.login(process.env.login_username, process.env.password);
-    await userlogin.leftnavigationLinksVerfications("Leave");
-    PIM.dateSelection('From Date','2022-10-01')
-    //let sucesstext = await PIM.configurationtab('Data Import', 'importData1.csv');
-   // sucesstext.should.be.eql('Number of Records Imported: 1');
+    await PIM.configurationtab();
+    await PIM.importingdata('Data Import', 'importData1.csv');
 
-}).tag("h1");
+}).tag("Rajesh");
 
-Scenario('Importing Data1', async ({ I, userlogin, PIM }) => {
+Scenario('Verifying Optional Fields', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
     await userlogin.login(process.env.login_username, process.env.password);
-   // let sucesstext = await PIM.configurationtab('Data Import', 'importData1.csv');
-    //sucesstext.should.be.eql('Number of Records Imported: 1');
-    await userlogin.leftnavigationLinksVerfications("Leave")
-    PIM.dateSelection('From Date','2022-10-01')
+    await PIM.configurationtab();
+    await PIM.optionalfields('Optional Fields');
+    let successmessage = await PIM.savebutton('Successfully Saved');
+    successmessage.should.be.eql("Successfully Saved");
 }).tag("h5");
+
+Scenario('Verify custom Fields', async ({ I, userlogin, PIM }) => {
+    I.amOnPage(process.env.url);
+    await userlogin.login(process.env.login_username, process.env.password);
+    await PIM.configurationtab();
+    await PIM.customfields('Custom Fields', 'Rajesh' + rnd);
+    await PIM.handlingDropDown('Screen', 'Personal Details');
+    await PIM.handlingDropDown('Type', 'Text or Number');
+    await PIM.handlingDropDown('Type', 'Drop Down');
+    I.fillField("//label[text()='Select Options']/../..//input", 'Ra1' + rnd);
+    let successmessage = await PIM.savebutton('Successfully Saved');
+    successmessage.should.be.eql("Successfully Saved");
+    await PIM.gridDatatable('Rajesh' + rnd);
+}).tag("h6");
+
+Scenario('verify Reporting Methods', async ({ I, userlogin, PIM }) => {
+    I.amOnPage(process.env.url);
+    await userlogin.login(process.env.login_username, process.env.password);
+    await PIM.configurationtab();
+    await PIM.reportingmethods('Reporting Methods', 'Rajesh' + rnd);
+    let successmessage = await PIM.savebutton('Successfully Saved');
+    successmessage.should.be.eql("Successfully Saved");
+    await PIM.gridDatatable('Rajesh' + rnd);
+}).tag("h7");
+
+Scenario('verify termination reasons', async ({ I, userlogin, PIM }) => {
+    I.amOnPage(process.env.url);
+    await userlogin.login(process.env.login_username, process.env.password);
+    await PIM.configurationtab();
+    await PIM.terminationreasons('Termination Reasons', 'Rajesh' + rnd);
+    let successmessage = await PIM.savebutton('Successfully Saved');
+    successmessage.should.be.eql("Successfully Saved");
+    await PIM.gridDatatable('Rajesh' + rnd);
+}).tag("h8");
+
+Scenario('calendar checking from helpers', async ({ I, userlogin }) => {
+    I.amOnPage(process.env.url);
+    await userlogin.login(process.env.login_username, process.env.password)
+    await userlogin.leftnavigationLinksVerfications("Admin")
+    await userlogin.leftnavigationLinksVerfications("PIM")
+    await userlogin.leftnavigationLinksVerfications("Leave")
+    await I.calenderhandling('From Date', '2021-10-01');
+    I.wait(2);
+    await I.calenderhandling("To Date", '2022-10-01');
+}).tag('h9');
