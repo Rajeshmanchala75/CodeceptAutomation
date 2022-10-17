@@ -21,6 +21,9 @@ class MyHelper extends Helper {
     await this.helpers.Playwright.click("//li[text()='" + year + "']");
     //selecting date
     await this.helpers.Playwright.click("//div[text()='" + day + "']");
+    let datetext = await this.helpers.Playwright.grabValueFromAll("//label[text()='" + fieldname + "']/../..//input");
+    console.log(datetext);
+    datetext.should.be.eql(datetext)
   }
 
 }
