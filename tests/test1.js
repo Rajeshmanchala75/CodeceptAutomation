@@ -58,7 +58,7 @@ Scenario('Creating User', async ({ I, userlogin, PIM }) => {
 Scenario('searching for user', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
     await userlogin.login(process.env.login_username, process.env.password)
-    await PIM.searchUser('Employee Id','9752','PIM')
+    await PIM.searchUser('Employee Id', '9752', 'PIM')
     await PIM.gridDatatable('9752');
 }).tag('chay')
 
