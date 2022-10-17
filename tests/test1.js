@@ -38,27 +38,27 @@ Scenario('Creating User', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
     // await userlogin.login('Admin','admin123')
     await userlogin.login(process.env.login_username, process.env.password)
-    await PIM.UserCreation(firstname, lastname, rnd, 'Password!1', 'five.jpg');
-    let successmessage = await PIM.savebutton('Successfully Saved');
-    successmessage.should.be.eql("Successfully Saved");
-    await PIM.dateSelection('License Expiry Date', '2022-06-25');
-    await PIM.dateSelection('Date of Birth', '1996-06-14');
-    await PIM.handlingDropDown('Nationality', 'Indian');
-    await PIM.handlingDropDown('Marital Status', 'Married');
-    await PIM.handlingDropDown('Blood Type', 'B+');
-    await I.click("//p[text()=' * Required']/..//button")
-    let succesmessage = await I.grabTextFrom("//p[text()='Successfully Updated']")
-    succesmessage.should.be.eql("Successfully Updated")
-    await PIM.searchUser('Employee Name', firstname, 'PIM');
-    await PIM.gridDatatable(rnd);
-    await PIM.gridDatatable(firstname + " ");
-    await PIM.gridDatatable(lastname);
-}).tag('c1')
-
+    // await PIM.UserCreation(firstname, lastname, rnd, 'Password!1', 'five.jpg');
+    // let successmessage = await PIM.savebutton('Successfully Saved');
+    // successmessage.should.be.eql("Successfully Saved");
+    // await PIM.dateSelection('License Expiry Date', '2022-06-25');
+    // await PIM.dateSelection('Date of Birth', '1996-06-14');
+    // await PIM.handlingDropDown('Nationality', 'Indian');
+    // await PIM.handlingDropDown('Marital Status', 'Married');
+    // await PIM.handlingDropDown('Blood Type', 'B+');
+    // await I.click("//p[text()=' * Required']/..//button")
+    // let succesmessage = await I.grabTextFrom("//p[text()='Successfully Updated']")
+    // succesmessage.should.be.eql("Successfully Updated")
+    await PIM.searchUser('Employee Name',"FNRodney Ryan", 'PIM');
+    //await PIM.searchUser('Employee Id','6483', 'PIM')
+     await PIM.gridDatatable('6483');
+    // await PIM.gridDatatable(firstname + " ");
+    // await PIM.gridDatatable(lastname);
+});
 Scenario('searching for user', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
     await userlogin.login(process.env.login_username, process.env.password)
-    await PIM.searchUser('Employee Id', '9752', 'PIM')
+    await PIM.searchUser('Employee Id', rnd, 'PIM')
     await PIM.gridDatatable('9752');
 }).tag('chay')
 
