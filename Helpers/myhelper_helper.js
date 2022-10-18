@@ -1,7 +1,9 @@
 const Helper = require('@codeceptjs/helper');
+const fs = require('fs');
 
 class MyHelper extends Helper {
   async Inputfunction(fieldname, value) {
+    //await this.helpers.Playwright.clearCookie();
     await this.helpers.Playwright.waitForVisible("//label[text()='" + fieldname + "']/../..//input", 20);
     await this.helpers.Playwright.fillField("//label[text()='" + fieldname + "']/../..//input", value);
   }
@@ -26,6 +28,13 @@ class MyHelper extends Helper {
     datetext.should.be.eql(datetext)
   }
 
+  async handlingdownloads() {
+    await this.helpers.Playwright.waitForElement("//a[text()='Download']", 10);
+    await this.helpers.Playwright.handleDownloads('downloads/test.csv');
+    await this.helpers.Playwright.wait(10);
+    await this.helpers.Playwright.click("//a[text()='Download']");
+    //await this.helpers.Playwright.amInPath('output/downloads');
+    await this.helpers.FileSystem.amInPath('output/downloads');
+  }
 }
-
 module.exports = MyHelper;

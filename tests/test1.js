@@ -3,6 +3,7 @@ const should = require("chai").should();
 const chance = require("chance").Chance();
 let rnd = chance.string({ length: 4, numeric: true })
 let rndname = chance.name()
+const fs = require('fs');
 
 Feature("Orange HRM")
 
@@ -52,13 +53,13 @@ Scenario('Creating User', async ({ I, userlogin, PIM }) => {
     await PIM.gridDatatable(rnd);
     await PIM.gridDatatable(firstname + " ");
     await PIM.gridDatatable(lastname);
-});
+}).tag('c1');
 Scenario('searching for user', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
     await userlogin.login(process.env.login_username, process.env.password)
     //await PIM.searchUser('Employee Name',"FNRodney Ryan", 'PIM');
-    await PIM.searchUser('Employee Id', "0217", 'PIM')
-    await PIM.gridDatatable('0217');
+    await PIM.searchUser('Employee Id', rnd, 'PIM');
+    await PIM.gridDatatable(rnd);
 }).tag('chay')
 
 Scenario('Add Reports ', async ({ I, userlogin, PIM }) => {

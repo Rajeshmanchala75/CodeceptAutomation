@@ -15,8 +15,12 @@ exports.config = {
       url: 'http://localhost',
       show: true,
       browser: 'chromium',
-      //windowSize: "maximize",
+    
     },
+    
+      FileSystem: {},
+      //windowSize: "maximize",
+   
       MyHelper: {
         require: './Helpers/myhelper_helper.js',
       },
