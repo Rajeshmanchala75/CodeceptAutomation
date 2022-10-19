@@ -7,8 +7,8 @@ const fs = require('fs');
 
 Feature("Orange HRM")
 
-Scenario('Login and verifying labels', async ({ I, userlogin }) => {
-    I.amOnPage(process.env.url);
+Scenario('login and verifying labels', async ({ I, userlogin }) => {
+    await I.amOnPage(process.env.url);
     await userlogin.login(process.env.login_username, process.env.password)
     await userlogin.labelverification("Employee Name");
     await userlogin.labelverification("Employee Id");
@@ -54,10 +54,10 @@ Scenario('Creating User', async ({ I, userlogin, PIM }) => {
     await PIM.gridDatatable(firstname + " ");
     await PIM.gridDatatable(lastname);
 }).tag('c1');
+
 Scenario('searching for user', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
-    await userlogin.login(process.env.login_username, process.env.password)
-    //await PIM.searchUser('Employee Name',"FNRodney Ryan", 'PIM');
+    await userlogin.login(process.env.login_username, process.env.password);
     await PIM.searchUser('Employee Id', rnd, 'PIM');
     await PIM.gridDatatable(rnd);
 }).tag('chay')
@@ -92,17 +92,16 @@ Data(accounts).Scenario('Test Login', async ({ I, current }) => {
         I.fillField("//input[@name='username']", current.username);
         I.fillField("//input[@name='password']", current.password);
         await I.click("//button[@type='submit']")
-
     }
 }).tag('R');
 
 Scenario('Importing Data', async ({ I, userlogin, PIM }) => {
+    let filename = 'importdata' + rnd + '.csv';
     I.amOnPage(process.env.url);
     await userlogin.login(process.env.login_username, process.env.password);
     await PIM.configurationtab();
-    await PIM.importingdata('Data Import', 'importData1.csv');
-
-}).tag("Rajesh");
+    await PIM.importingdata('Data Import', 'importData1.csv', filename);
+}).tag("h11");
 
 Scenario('Verifying Optional Fields', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
@@ -156,6 +155,8 @@ Scenario('calendar checking from helpers', async ({ I, userlogin, PIM }) => {
     await I.calenderhandling('From Date', '2021-10-02');
     I.wait(2);
     // await I.calenderhandling("To Date", '2022-10-01');
-    PIM.dateSelection("From Date", '2021-10-01');
+    await PIM.dateSelection("From Date", '2021-10-01');
 
 }).tag('h9');
+
+

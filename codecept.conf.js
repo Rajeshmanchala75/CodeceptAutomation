@@ -15,22 +15,23 @@ exports.config = {
       url: 'http://localhost',
       show: true,
       browser: 'chromium',
-    
-    },
-    
-      FileSystem: {},
-      //windowSize: "maximize",
-   
-      MyHelper: {
-        require: './Helpers/myhelper_helper.js',
-      },
 
     },
+
+    FileSystem: {
+    },
+   
+
+    MyHelper: {
+      require: './Helpers/myhelper_helper.js',
+    },
+
+  },
   include: {
     I: './steps_file.js',
-    userlogin:'./lib/ORANGEHRMFUNCTION.js',
-    RND:'./pages/functions.js',
-    PIM:'./lib/OrPIM.js',
+    userlogin: './lib/ORANGEHRMFUNCTION.js',
+    RND: './pages/functions.js',
+    PIM: './lib/OrPIM.js',
     loginPage: './pages/Login.js',
   },
   name: 'CodeceptFrameWork',
@@ -39,6 +40,7 @@ exports.config = {
     autoDelay: {
       enabled: true,
     },
+
     allure: {
       enabled: true,
       outputDir: "./output/AlluriReports/ALReports"

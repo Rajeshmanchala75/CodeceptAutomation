@@ -1,9 +1,8 @@
 const Helper = require('@codeceptjs/helper');
-const fs = require('fs');
+
 
 class MyHelper extends Helper {
   async Inputfunction(fieldname, value) {
-    //await this.helpers.Playwright.clearCookie();
     await this.helpers.Playwright.waitForVisible("//label[text()='" + fieldname + "']/../..//input", 20);
     await this.helpers.Playwright.fillField("//label[text()='" + fieldname + "']/../..//input", value);
   }
@@ -28,13 +27,16 @@ class MyHelper extends Helper {
     datetext.should.be.eql(datetext)
   }
 
-  async handlingdownloads() {
-    await this.helpers.Playwright.waitForElement("//a[text()='Download']", 10);
-    await this.helpers.Playwright.handleDownloads('downloads/test.csv');
-    await this.helpers.Playwright.wait(10);
-    await this.helpers.Playwright.click("//a[text()='Download']");
-    //await this.helpers.Playwright.amInPath('output/downloads');
-    await this.helpers.FileSystem.amInPath('output/downloads');
+  async handlingDownloadFile(fieldname, filename) {
+    await this.helpers.Playwright.waitForElement("//a[text()='" + fieldname + "']", 10);
+    await this.helpers.Playwright.handleDownloads("/downloads/" + filename + "");
+    await this.helpers.Playwright.click("//a[text()='" + fieldname + "']");
+    await this.helpers.FileSystem.amInPath('/output/downloads');
+    await this.helpers.FileSystem.waitForFile(filename, 10);
+    await this.helpers.FileSystem.seeFile(filename);
+    let downloadedFileNames = await this.helpers.FileSystem.grabFileNames("/output/downloads/" + filename + "");
+    console.log(downloadedFileNames);
+    await this.helpers.FileSystem.seeFileNameMatching('.csv');
   }
 }
 module.exports = MyHelper;
