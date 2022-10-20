@@ -1,4 +1,5 @@
 const Helper = require('@codeceptjs/helper');
+const { arrayBuffer } = require('stream/consumers');
 
 
 class MyHelper extends Helper {
@@ -35,8 +36,24 @@ class MyHelper extends Helper {
     await this.helpers.FileSystem.waitForFile(filename, 10);
     await this.helpers.FileSystem.seeFile(filename);
     let downloadedFileNames = await this.helpers.FileSystem.grabFileNames("/output/downloads/" + filename + "");
-    console.log(downloadedFileNames);
+    //let downloadnewfilename=downloadedFileNames.filter(filenamecheck);
+    //console.log(downloadnewfilename);
+
+    //function filenamecheck(newfilename) {
+    //return newfilename== filename;
+    // }
+    let i;
+    for (i = 0; i < downloadedFileNames.length; i++) {
+
+      if (downloadedFileNames[i] == filename) {
+        console.log(downloadedFileNames[i]);
+      }
+    }
+
     await this.helpers.FileSystem.seeFileNameMatching('.csv');
+
+
+
   }
 }
 module.exports = MyHelper;

@@ -154,8 +154,8 @@ Scenario('calendar checking from helpers', async ({ I, userlogin, PIM }) => {
     await userlogin.leftnavigationLinksVerfications("Leave")
     await I.calenderhandling('From Date', '2021-10-02');
     I.wait(2);
-    // await I.calenderhandling("To Date", '2022-10-01');
     await PIM.dateSelection("From Date", '2021-10-01');
+
 
 }).tag('h9');
 
