@@ -39,7 +39,7 @@ class MyHelper extends Helper {
     //let downloadnewfilename=downloadedFileNames.filter(filenamecheck);
     //console.log(downloadnewfilename);
 
-    //function filenamecheck(newfilename) {
+   
     
     let i;
     for (i = 0; i < downloadedFileNames.length; i++) {
