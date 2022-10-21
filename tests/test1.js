@@ -5,8 +5,7 @@ let rnd = chance.string({ length: 4, numeric: true })
 let rndname = chance.name()
 const fs = require('fs');
 
-//const csvtojson=require('csvtojson');
-//let csv = require('convert-csv-to-json');
+
 const csv1 = require('csv-to-json');
 const csvtojsonV2=require("csvtojson");
 var csv = require('csv');

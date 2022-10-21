@@ -51,23 +51,15 @@ class MyHelper extends Helper {
 
     let filedata = await csvtojsonV2().fromFile(`./output/downloads/${filename}`);
     let filedata1 = await csvtojsonV2().fromFile("./input/importData1.csv");
-    let invalidname=await csvtojsonV2().fromFile("./input/importDatanew.csv"
+    let invalidname = await csvtojsonV2().fromFile("./input/importDatanew.csv"
     );
     console.log(filedata);
     console.log(filedata1);
 
-    assert(JSON.stringify(filedata)==JSON.stringify(invalidname), 
-    `comparision failed: actual file: ${JSON.stringify(filedata)} 
+    assert(JSON.stringify(filedata) == JSON.stringify(invalidname),
+      `comparision failed: actual file: ${JSON.stringify(filedata)} 
     expected file: ${JSON.stringify(invalidname)}`);
-    
-
-    // if (filedata == filedata1) {
-    //   console.log('pass');
-    // }
-    // else {
-    //   console.log('fail');
-    // }
-    // await this.helpers.FileSystem.seeFileNameMatching('.csv');
+    await this.helpers.FileSystem.seeFileNameMatching('.csv');
   }
 }
 
