@@ -1,5 +1,10 @@
 const Helper = require('@codeceptjs/helper');
-const { arrayBuffer } = require('stream/consumers');
+const fs = require('fs')
+//const csvtojson=require('csvtojson');
+let csv = require('convert-csv-to-json');
+const csvparser = require('csv-parser');
+const csvtojsonV2 = require("csvtojson");
+var assert = require('chai').assert
 
 
 class MyHelper extends Helper {
@@ -35,24 +40,39 @@ class MyHelper extends Helper {
     await this.helpers.FileSystem.amInPath('/output/downloads');
     await this.helpers.FileSystem.waitForFile(filename, 10);
     await this.helpers.FileSystem.seeFile(filename);
-    let downloadedFileNames = await this.helpers.FileSystem.grabFileNames("/output/downloads/" + filename + "");
-    //let downloadnewfilename=downloadedFileNames.filter(filenamecheck);
-    //console.log(downloadnewfilename);
+    // let downloadedFileNames = await this.helpers.FileSystem.grabFileNames("/output/downloads/" + filename + "");
+    // for (let i = 0; i < downloadedFileNames.length; i++) {
 
-   
+    //   if (downloadedFileNames[i] == filename) {
+    //     console.log(downloadedFileNames[i]);
+
+    // let path = "./output/downloads/"
+    // let path1="./input/importData1 copy.csv";
+
+    let filedata = await csvtojsonV2().fromFile(`./output/downloads/${filename}`);
+    let filedata1 = await csvtojsonV2().fromFile("./input/importData1.csv");
+    let invalidname=await csvtojsonV2().fromFile("./input/importDatanew.csv"
+    );
+    console.log(filedata);
+    console.log(filedata1);
+
+    assert(JSON.stringify(filedata)==JSON.stringify(invalidname), 
+    `comparision failed: actual file: ${JSON.stringify(filedata)} 
+    expected file: ${JSON.stringify(invalidname)}`);
     
-    let i;
-    for (i = 0; i < downloadedFileNames.length; i++) {
 
-      if (downloadedFileNames[i] == filename) {
-        console.log(downloadedFileNames[i]);
-      }
-    }
-
-    await this.helpers.FileSystem.seeFileNameMatching('.csv');
-
-
-
+    // if (filedata == filedata1) {
+    //   console.log('pass');
+    // }
+    // else {
+    //   console.log('fail');
+    // }
+    // await this.helpers.FileSystem.seeFileNameMatching('.csv');
   }
 }
+
+
+
+
+
 module.exports = MyHelper;

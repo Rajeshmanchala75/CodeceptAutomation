@@ -5,6 +5,15 @@ let rnd = chance.string({ length: 4, numeric: true })
 let rndname = chance.name()
 const fs = require('fs');
 
+//const csvtojson=require('csvtojson');
+//let csv = require('convert-csv-to-json');
+const csv1 = require('csv-to-json');
+const csvtojsonV2=require("csvtojson");
+var csv = require('csv');
+const csvparser = require('csv-parser');
+const jsontocsv=require('json2csv');
+
+
 Feature("Orange HRM")
 
 Scenario('login and verifying labels', async ({ I, userlogin }) => {
@@ -158,5 +167,34 @@ Scenario('calendar checking from helpers', async ({ I, userlogin, PIM }) => {
 
 
 }).tag('h9');
+
+Scenario('file reading', async ({ I, userlogin, PIM }) => {
+   //let filedata= await csv(null).fromFile("./input/importData1.csv");
+  // console.log(filedata);
+ // let  filedate=await csv().fr
+//let hi= csv().fromFile("./input/importData1.csv")
+
+let hi=await csvtojsonV2().fromFile("./input/importData1.csv");
+console.log(hi);
+    // I.amOnPage(process.env.url);
+    // await userlogin.login(process.env.login_username, process.env.password)
+    // await userlogin.leftnavigationLinksVerfications("Admin")
+    // await userlogin.leftnavigationLinksVerfications("PIM")
+    // await userlogin.leftnavigationLinksVerfications("Leave")
+    // await I.calenderhandling('From Date', '2021-10-02');
+    // I.wait(2);
+    // await PIM.dateSelection("From Date", '2021-10-01');
+
+// fs.readFile('./input/importData1.csv', 'utf8', function (err,data) {
+//   if (err) {
+//     return console.log(err);
+//   }
+//     var firstLineRegEx = /^(.*)$/m
+//     var csvHeader = firstLineRegEx.exec(data)
+//     console.log(csvHeader);
+// });
+
+
+}).tag('text');
 
 
