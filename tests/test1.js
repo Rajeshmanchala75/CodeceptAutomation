@@ -108,7 +108,7 @@ Scenario('Importing Data', async ({ I, userlogin, PIM }) => {
     I.amOnPage(process.env.url);
     await userlogin.login(process.env.login_username, process.env.password);
     await PIM.configurationtab();
-    await PIM.importingdata('Data Import', 'importData1.csv', filename);
+    await PIM.importingdata('Data Import', 'importDatanew.csv', filename);
 }).tag("h11");
 
 Scenario('Verifying Optional Fields', async ({ I, userlogin, PIM }) => {

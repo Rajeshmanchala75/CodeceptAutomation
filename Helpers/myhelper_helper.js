@@ -40,26 +40,27 @@ class MyHelper extends Helper {
     await this.helpers.FileSystem.amInPath('/output/downloads');
     await this.helpers.FileSystem.waitForFile(filename, 10);
     await this.helpers.FileSystem.seeFile(filename);
-    // let downloadedFileNames = await this.helpers.FileSystem.grabFileNames("/output/downloads/" + filename + "");
-    // for (let i = 0; i < downloadedFileNames.length; i++) {
+    // let filedata = await csvtojsonV2().fromFile(`./output/downloads/${filename}`);
+    // let filedata1 = await csvtojsonV2().fromFile("./input/importData1.csv");
+    // let invalidname = await csvtojsonV2().fromFile("./input/importDatanew.csv");
+    // console.log(filedata);
+    // console.log(filedata1);
 
-    //   if (downloadedFileNames[i] == filename) {
-    //     console.log(downloadedFileNames[i]);
+    // assert(JSON.stringify(filedata) == JSON.stringify(filedata1),
+    //   `comparision failed: actual file: ${JSON.stringify(filedata)} 
+    // expected file: ${JSON.stringify(filedata1)}`);
+    // await this.helpers.FileSystem.seeFileNameMatching('.csv');
 
-    // let path = "./output/downloads/"
-    // let path1="./input/importData1 copy.csv";
+    let exfiledata = await csvtojsonV2().fromFile("./input/empdata2.xlsx");
+    let exfiledata1 = await csvtojsonV2().fromFile(".input/empdata1.xlsx");
+   // let exinvalidname = await csvtojsonV2().fromFile("./input/importDatanew.csv");
+    console.log(exfiledata);
+    console.log(exfiledata1);
 
-    let filedata = await csvtojsonV2().fromFile(`./output/downloads/${filename}`);
-    let filedata1 = await csvtojsonV2().fromFile("./input/importData1.csv");
-    let invalidname = await csvtojsonV2().fromFile("./input/importDatanew.csv"
-    );
-    console.log(filedata);
-    console.log(filedata1);
-
-    assert(JSON.stringify(filedata) == JSON.stringify(invalidname),
-      `comparision failed: actual file: ${JSON.stringify(filedata)} 
-    expected file: ${JSON.stringify(invalidname)}`);
-    await this.helpers.FileSystem.seeFileNameMatching('.csv');
+    assert(JSON.stringify(exfiledata) == JSON.stringify(exfiledata1),
+      `comparision failed: actual file: ${JSON.stringify(exfiledata)} 
+    expected file: ${JSON.stringify(exfiledata1)}`);
+   // await this.helpers.FileSystem.seeFileNameMatching('.xlsx');
   }
 }
 

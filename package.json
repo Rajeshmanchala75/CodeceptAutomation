@@ -26,6 +26,7 @@
     "fs": "^0.0.1-security",
     "json-to-csv": "^1.0.0",
     "json2csv": "^5.0.7",
-    "playwright-core": "1.18"
+    "playwright-core": "1.18",
+    "xlsxtojson": "^0.0.2"
   }
 }
