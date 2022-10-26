@@ -4,8 +4,9 @@ const chance = require("chance").Chance();
 let rnd = chance.string({ length: 4, numeric: true })
 let rndname = chance.name()
 const fs = require('fs');
-
-
+//'use strict';
+const excelToJson = require('convert-excel-to-json');
+var assert = require('chai').assert
 const csv1 = require('csv-to-json');
 const csvtojsonV2=require("csvtojson");
 var csv = require('csv');
@@ -168,32 +169,24 @@ Scenario('calendar checking from helpers', async ({ I, userlogin, PIM }) => {
 }).tag('h9');
 
 Scenario('file reading', async ({ I, userlogin, PIM }) => {
-   //let filedata= await csv(null).fromFile("./input/importData1.csv");
-  // console.log(filedata);
- // let  filedate=await csv().fr
-//let hi= csv().fromFile("./input/importData1.csv")
 
-let hi=await csvtojsonV2().fromFile("./input/importData1.csv");
-console.log(hi);
-    // I.amOnPage(process.env.url);
-    // await userlogin.login(process.env.login_username, process.env.password)
-    // await userlogin.leftnavigationLinksVerfications("Admin")
-    // await userlogin.leftnavigationLinksVerfications("PIM")
-    // await userlogin.leftnavigationLinksVerfications("Leave")
-    // await I.calenderhandling('From Date', '2021-10-02');
-    // I.wait(2);
-    // await PIM.dateSelection("From Date", '2021-10-01');
+    //converting excel to json format
+let exceldata=excelToJson({sourceFile:"./input/excelFiles/empdata2.xlsx"});
+console.log(exceldata);
+let exceldata1=excelToJson({sourceFile:"./input/excelFiles/empdatanew.xlsx"});
+console.log(exceldata1);
+let exceldata2=excelToJson({sourceFile:"./input/excelFiles/empdata1.xlsx"});
+console.log(exceldata2);
 
-// fs.readFile('./input/importData1.csv', 'utf8', function (err,data) {
-//   if (err) {
-//     return console.log(err);
-//   }
-//     var firstLineRegEx = /^(.*)$/m
-//     var csvHeader = firstLineRegEx.exec(data)
-//     console.log(csvHeader);
-// });
+//validating  two excel files with same data
+assert(JSON.stringify(exceldata) == JSON.stringify(exceldata1),
+`comparision failed: actual file: ${JSON.stringify(exceldata)} 
+expected file: ${JSON.stringify(exceldata1)}`);
 
-
+// validating two excel files with different data
+assert(JSON.stringify(exceldata) == JSON.stringify(exceldata2),
+`comparision failed: actual file: ${JSON.stringify(exceldata)} 
+expected file: ${JSON.stringify(exceldata2)}`);
 }).tag('text');
 
 
